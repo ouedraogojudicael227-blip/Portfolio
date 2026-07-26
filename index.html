@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ouedraogo Judicaël — Portfolio</title>
+<meta name="description" content="Portfolio de Ouedraogo Judicaël — fondateur de CyberSentinel, Aether News et FasoLab.">
+<meta property="og:title" content="Ouedraogo Judicaël — Portfolio">
+<meta property="og:description" content="Fondateur de CyberSentinel, Aether News et FasoLab — cybersécurité, IA, programmation.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230d0e13'/%3E%3Ctext x='50' y='68' font-family='sans-serif' font-size='50' font-weight='800' fill='%238b7cf6' text-anchor='middle'%3EOJ%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0e13; --panel:#15161f; --panel-2:#1a1b26; --line:#262837; --line-soft:#1f2029;
+    --accent:#8b7cf6; --accent-dim:#6a5cd6; --accent-soft:#1f1a3a;
+    --text:#e7e6ee; --muted:#8b8a9a; --mono:'JetBrains Mono', monospace; --sans:'IBM Plex Sans', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg); color:var(--text); font-family:var(--sans); overflow-x:hidden; position:relative;}
+  .cursor-glow{
+    position:fixed; top:0; left:0; width:420px; height:420px; border-radius:50%;
+    background:radial-gradient(circle, rgba(139,124,246,.09) 0%, transparent 70%);
+    pointer-events:none; z-index:2; transform:translate(-50%,-50%); opacity:0; transition:opacity .3s ease;
+  }
+  .progress{position:fixed; top:0; left:0; height:2px; background:var(--accent); z-index:100; width:0%; transition:width .1s linear;}
+  a{color:inherit; text-decoration:none;}
+  section{position:relative; z-index:1; padding:110px 8vw; max-width:1100px; margin:0 auto;}
+  .eyebrow{
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.24em; color:var(--accent);
+    text-transform:uppercase; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:""; width:16px; height:1px; background:var(--accent);}
+  h1,h2,h3{font-family:var(--sans); font-weight:700; letter-spacing:-.01em;}
+  .reveal{opacity:0; transform:translateY(20px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  .section-divider{display:flex; align-items:center; justify-content:center; gap:16px; padding:0 8vw; max-width:1100px; margin:0 auto;}
+  .section-divider .l{height:1px; flex:1; max-width:220px; background:linear-gradient(90deg, transparent, var(--line));}
+  .section-divider .l.r{background:linear-gradient(90deg, var(--line), transparent);}
+  .section-divider .mark{width:6px; height:6px; background:var(--accent); border-radius:1px; transform:rotate(45deg);}
+
+  nav{
+    position:sticky; top:0; z-index:50; display:flex; justify-content:space-between; align-items:center;
+    padding:20px 8vw; backdrop-filter:blur(10px); background:rgba(13,14,19,0.8); border-bottom:1px solid var(--line);
+  }
+  .logo{font-family:var(--sans); font-weight:700; font-size:1rem; color:var(--text);}
+  .logo span{color:var(--accent);}
+  .nav-right{display:flex; align-items:center; gap:22px;}
+  .navlinks{display:flex; gap:28px; font-size:.85rem; color:var(--muted);}
+  .navlinks a{position:relative; padding-bottom:3px;}
+  .navlinks a::after{content:""; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--accent); transition:width .25s ease;}
+  .navlinks a:hover{color:var(--text);}
+  .navlinks a:hover::after{width:100%;}
+  .lang-toggle{
+    font-family:var(--mono); font-size:.72rem; font-weight:700; letter-spacing:.05em;
+    padding:8px 14px; border-radius:6px; border:1px solid var(--line); color:var(--text);
+    background:transparent; cursor:pointer; flex-shrink:0;
+  }
+  .lang-toggle:hover{border-color:var(--accent); color:var(--accent);}
+  .btn-cv{
+    font-size:.8rem; font-weight:600; padding:9px 16px; border-radius:6px;
+    border:1px solid var(--accent); color:var(--accent); display:inline-flex; align-items:center; gap:6px;
+    transition:.2s; white-space:nowrap;
+  }
+  .btn-cv:hover{background:var(--accent); color:#100e1f;}
+  .btn-cv svg{width:13px; height:13px;}
+  .burger{display:none; flex-direction:column; gap:5px; width:26px; cursor:pointer; background:none; border:none;}
+  .burger span{height:1.5px; background:var(--text); width:100%;}
+  .mobile-menu{
+    display:none; position:fixed; inset:0; z-index:80; background:var(--bg);
+    flex-direction:column; align-items:center; justify-content:center; gap:28px;
+    opacity:0; visibility:hidden; transition:opacity .3s ease;
+  }
+  .mobile-menu.open{opacity:1; visibility:visible;}
+  .mobile-menu a{font-family:var(--sans); font-weight:600; font-size:1.25rem; color:var(--text);}
+  .mobile-menu a:hover{color:var(--accent);}
+  .mobile-close{position:absolute; top:24px; right:8vw; background:none; border:none; color:var(--text); font-size:1.5rem; cursor:pointer;}
+
+  .hero{min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding-top:80px; max-width:1100px; margin:0 auto;}
+  .badge{
+    display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:.75rem; color:var(--accent);
+    border:1px solid var(--accent-dim); background:var(--accent-soft); padding:7px 14px; border-radius:999px;
+    margin-bottom:26px; letter-spacing:.03em;
+  }
+  .badge .pulse-dot{width:6px; height:6px; border-radius:50%; background:var(--accent);}
+  .hero h1{font-size:clamp(2.4rem,5.4vw,4.3rem); line-height:1.06; color:var(--text);}
+  .hero h1 .hl{color:var(--accent);}
+  .hero p.role{color:var(--muted); margin-top:16px; font-size:1.05rem;}
+  .hero .quote{
+    max-width:600px; margin-top:22px; color:var(--text); opacity:.9; font-style:italic;
+    font-size:1rem; border-left:2px solid var(--accent-dim); padding-left:16px;
+  }
+  .hero .lead{max-width:560px; margin-top:20px; color:var(--text); opacity:.78; line-height:1.75;}
+  .btn-row{display:flex; gap:16px; margin-top:38px; flex-wrap:wrap;}
+  .btn{
+    font-size:.88rem; font-weight:600; letter-spacing:.01em; padding:14px 26px; border-radius:8px;
+    border:1px solid var(--line); color:var(--text); position:relative; cursor:pointer; background:transparent;
+    transition:.2s; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn.solid{background:var(--accent); color:#100e1f; border-color:var(--accent); font-weight:700;}
+  .btn:hover{border-color:var(--accent); color:var(--accent); transform:translateY(-2px);}
+  .btn.solid:hover{background:#9d8ffb; color:#100e1f; box-shadow:0 10px 26px rgba(139,124,246,.25);}
+  .btn svg{width:13px; height:13px;}
+
+  .stats{max-width:1100px; margin:0 auto; padding:0 8vw 60px; display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+  .stat{text-align:center; padding:22px 10px; border:1px solid var(--line); border-radius:10px; background:var(--panel);}
+  .stat .num{font-family:var(--sans); font-size:1.7rem; font-weight:700; color:var(--accent);}
+  .stat .label{font-family:var(--mono); font-size:.64rem; color:var(--muted); letter-spacing:.08em; text-transform:uppercase; margin-top:6px;}
+
+  .sec-head{margin-bottom:52px;}
+  .sec-head h2{font-size:clamp(1.6rem,3vw,2.3rem); margin-top:10px; color:var(--text);}
+
+  .about-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:50px; align-items:start;}
+  .about-grid p{line-height:1.85; color:var(--text); opacity:.85; margin-bottom:16px;}
+  .facts-box{border:1px solid var(--line); border-radius:14px; background:var(--panel); overflow:hidden;}
+  .facts-box .facts-header{
+    padding:16px 22px; border-bottom:1px solid var(--line); font-family:var(--mono);
+    font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted);
+  }
+  .facts-list{padding:20px 22px; display:flex; flex-direction:column; gap:14px;}
+  .fact{display:flex; justify-content:space-between; gap:14px; font-size:.85rem; border-bottom:1px solid var(--line-soft); padding-bottom:12px;}
+  .fact:last-child{border-bottom:none; padding-bottom:0;}
+  .fact .k{color:var(--muted);}
+  .fact .v{color:var(--text); text-align:right; font-weight:500;}
+
+  .timeline{display:flex; flex-direction:column;}
+  .tl-item{display:grid; grid-template-columns:150px 1fr; gap:26px; padding:24px 0; border-bottom:1px solid var(--line-soft);}
+  .tl-item:last-child{border-bottom:none;}
+  .tl-date{font-family:var(--mono); color:var(--accent); font-size:.85rem;}
+  .tl-content h3{font-size:1rem; margin-bottom:6px; font-weight:600;}
+  .tl-content p{color:var(--muted); font-size:.92rem; line-height:1.6;}
+
+  .skills-table{width:100%; border-collapse:collapse; margin-bottom:34px;}
+  .skills-table td{font-size:.9rem; padding:13px 0; border-bottom:1px solid var(--line-soft);}
+  .skills-table td.sk{color:var(--text);}
+  .skills-table td.lv{color:var(--accent); text-align:right; font-weight:600; font-family:var(--mono); font-size:.8rem;}
+  .tools-row{display:flex; flex-wrap:wrap; gap:10px;}
+  .tag{
+    font-family:var(--mono); font-size:.78rem; padding:8px 14px; border:1px solid var(--line);
+    border-radius:20px; color:var(--muted); background:var(--panel); display:inline-flex; align-items:center; gap:8px;
+  }
+  .tag.on{color:var(--accent); border-color:var(--accent-dim);}
+
+  .certs{display:flex; flex-direction:column; gap:14px;}
+  .cert{
+    display:flex; justify-content:space-between; align-items:center; gap:20px;
+    background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:20px 26px; transition:.2s;
+  }
+  .cert:hover{border-color:var(--accent-dim);}
+  .cert-name{font-weight:600; font-size:.95rem;}
+  .cert-issuer{color:var(--muted); font-size:.8rem; margin-top:4px;}
+  .cert-status{
+    font-family:var(--mono); font-size:.66rem; letter-spacing:.06em; text-transform:uppercase; padding:6px 12px;
+    border-radius:20px; background:var(--accent-soft); color:var(--accent); flex-shrink:0; white-space:nowrap; border:1px solid var(--accent-dim);
+  }
+
+  .ctf-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px;}
+  .ctf-card{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:26px; transition:.2s;}
+  .ctf-card:hover{border-color:var(--accent-dim); transform:translateY(-2px);}
+  .ctf-card h3{font-size:.98rem; margin-bottom:8px; font-weight:600;}
+  .ctf-card p{color:var(--muted); font-size:.88rem; line-height:1.6; margin-bottom:14px;}
+  .ctf-card a{font-size:.8rem; color:var(--accent); font-weight:600;}
+  .ctf-card a:hover{color:#9d8ffb;}
+
+  .projects{display:flex; flex-direction:column; gap:22px;}
+  .proj{border:1px solid var(--line); background:var(--panel); border-radius:14px; padding:34px; display:grid; grid-template-columns:44px 1fr auto; gap:26px; align-items:start; transition:.25s;}
+  .proj:hover{border-color:var(--accent-dim); transform:translateY(-2px);}
+  .proj-idx{font-family:var(--mono); color:var(--accent-dim); font-size:.85rem;}
+  .proj h3{font-size:1.25rem; color:var(--text); margin-bottom:8px;}
+  .proj p{color:var(--muted); line-height:1.7; max-width:480px;}
+  .proj-link-line{margin-top:8px; font-family:var(--mono); font-size:.78rem; color:var(--accent-dim);}
+  .proj-actions{display:flex; flex-direction:column; gap:10px;}
+  .proj-actions .btn{font-size:.78rem; padding:10px 16px; text-align:center;}
+
+  .contact-box{border:1px solid var(--line); background:var(--panel); border-radius:16px; padding:60px; text-align:center;}
+  .contact-box h2{font-size:clamp(1.8rem,3.4vw,2.6rem); color:var(--text); margin-bottom:16px;}
+  .contact-box p{color:var(--muted); max-width:480px; margin:0 auto 34px;}
+  .contact-links{display:flex; justify-content:center; gap:16px; flex-wrap:wrap;}
+  .divider-or{display:flex; align-items:center; gap:14px; margin:34px 0; color:var(--muted); font-family:var(--mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.1em;}
+  .divider-or::before, .divider-or::after{content:""; flex:1; height:1px; background:var(--line);}
+  .contact-form{max-width:480px; margin:0 auto; display:flex; flex-direction:column; gap:14px; text-align:left;}
+  .contact-form label{font-family:var(--mono); font-size:.72rem; color:var(--muted); margin-bottom:4px; display:block; text-transform:uppercase; letter-spacing:.05em;}
+  .contact-form input, .contact-form textarea{
+    width:100%; background:var(--panel-2); border:1px solid var(--line); border-radius:8px; padding:12px 14px;
+    color:var(--text); font-family:var(--sans); font-size:.9rem; resize:vertical;
+  }
+  .contact-form input:focus, .contact-form textarea:focus{border-color:var(--accent); outline:none;}
+  .contact-form .field{display:flex; flex-direction:column;}
+  .contact-form button{
+    margin-top:4px; font-size:.9rem; font-weight:700; padding:14px; border-radius:8px;
+    border:none; background:var(--accent); color:#100e1f; cursor:pointer; transition:.2s;
+  }
+  .contact-form button:hover{background:#9d8ffb;}
+  .form-note{font-family:var(--mono); font-size:.7rem; color:var(--muted); margin-top:8px; text-align:center;}
+
+  footer{padding:34px 8vw; border-top:1px solid var(--line); text-align:center; font-size:.85rem; color:var(--muted); position:relative; z-index:1;}
+  footer span{color:var(--accent); opacity:.8;}
+
+  @media(max-width:840px){
+    .about-grid{grid-template-columns:1fr;}
+    .proj{grid-template-columns:1fr;}
+    .navlinks{display:none;}
+    .burger{display:flex;}
+    .mobile-menu{display:flex;}
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .tl-item{grid-template-columns:1fr; gap:6px;}
+    .ctf-grid{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion: reduce){*{animation:none !important; transition:none !important;}}
+  [data-lang="en"]{display:none;}
+  html.lang-en [data-lang="en"]{display:revert;}
+  html.lang-en [data-lang="fr"]{display:none;}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+</style>
+</head>
+<body>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="progress" id="progress"></div>
+
+<nav>
+  <div class="logo">Judicaël<span>.</span>Ouedraogo</div>
+  <div class="nav-right">
+    <div class="navlinks">
+      <a href="#about"><span data-lang="fr">Profil</span><span data-lang="en">Profile</span></a>
+      <a href="#parcours"><span data-lang="fr">Parcours</span><span data-lang="en">Journey</span></a>
+      <a href="#skills"><span data-lang="fr">Compétences</span><span data-lang="en">Skills</span></a>
+      <a href="#certs">Certifications</a>
+      <a href="#projects"><span data-lang="fr">Projets</span><span data-lang="en">Projects</span></a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="lang-toggle" id="langToggle" aria-label="Changer de langue">FR / EN</button>
+    <a href="cv-judicael-fr.pdf" download id="cvLink" class="btn-cv">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 21h16"/></svg>
+      CV
+    </a>
+    <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" aria-label="Fermer le menu">✕</button>
+  <a href="#about"><span data-lang="fr">Profil</span><span data-lang="en">Profile</span></a>
+  <a href="#parcours"><span data-lang="fr">Parcours</span><span data-lang="en">Journey</span></a>
+  <a href="#skills"><span data-lang="fr">Compétences</span><span data-lang="en">Skills</span></a>
+  <a href="#certs">Certifications</a>
+  <a href="#projects"><span data-lang="fr">Projets</span><span data-lang="en">Projects</span></a>
+  <a href="#contact">Contact</a>
+  <a href="cv-judicael-fr.pdf" download id="cvLinkMobile"><span data-lang="fr">Télécharger le CV</span><span data-lang="en">Download CV</span></a>
+</div>
+
+<section class="hero">
+  <div class="badge"><span class="pulse-dot"></span><span data-lang="fr">Disponible pour de nouvelles opportunités</span><span data-lang="en">Open to new opportunities</span></div>
+
+  <h1>Ouedraogo <span class="hl">Judicaël</span></h1>
+  <p class="role">
+    <span data-lang="fr">Étudiant · LSNB Bobo-Dioulasso — Fondateur de CyberSentinel, Aether News & FasoLab</span>
+    <span data-lang="en">Student · LSNB Bobo-Dioulasso — Founder of CyberSentinel, Aether News & FasoLab</span>
+  </p>
+  <p class="quote">
+    <span data-lang="fr">« Building the future of African tech and AI, one project at a time. » 🌍</span>
+    <span data-lang="en">"Building the future of African tech and AI, one project at a time." 🌍</span>
+  </p>
+  <p class="lead">
+    <span data-lang="fr">Passionné de programmation, d'intelligence artificielle et de cybersécurité. Je construis constamment de nouvelles compétences, crée des projets et apprends de nouvelles technologies — avec pour objectif une Afrique numérique plus sûre et plus intelligente.</span>
+    <span data-lang="en">Passionate about programming, artificial intelligence, and cybersecurity. I'm constantly building skills, creating projects, and learning new technologies — with the goal of a safer and smarter digital Africa.</span>
+  </p>
+
+  <div class="btn-row">
+    <a href="#projects" class="btn solid"><span data-lang="fr">Voir mes projets</span><span data-lang="en">View my projects</span></a>
+    <a href="#contact" class="btn"><span data-lang="fr">Me contacter</span><span data-lang="en">Get in touch</span></a>
+  </div>
+</section>
+
+<div class="stats reveal">
+  <div class="stat"><div class="num">4</div><div class="label"><span data-lang="fr">Projets</span><span data-lang="en">Projects</span></div></div>
+  <div class="stat"><div class="num">3</div><div class="label">Certifications</div></div>
+  <div class="stat"><div class="num">3</div><div class="label"><span data-lang="fr">Structures fondées</span><span data-lang="en">Founded ventures</span></div></div>
+  <div class="stat"><div class="num">BF</div><div class="label"><span data-lang="fr">Burkina Faso</span><span data-lang="en">Burkina Faso</span></div></div>
+</div>
+
+<div class="section-divider"><span class="l"></span><span class="mark"></span><span class="l r"></span></div>
+
+<section id="about" class="reveal">
+  <div class="sec-head">
+    <div class="eyebrow"><span data-lang="fr">Profil</span><span data-lang="en">Profile</span></div>
+    <h2><span data-lang="fr">À propos</span><span data-lang="en">About</span></h2>
+  </div>
+  <div class="about-grid">
+    <div>
+      <p data-lang="fr">Je suis élève au Lycée Scientifique National de Bobo-Dioulasso (LSNB) et fondateur de CyberSentinel, Aether News et FasoLab. Passionné de programmation, d'intelligence artificielle et de cybersécurité, je construis constamment de nouvelles compétences, crée des projets et apprends de nouvelles technologies.</p>
+      <p data-lang="en">I'm a high school student at the National Scientific High School of Bobo-Dioulasso (LSNB) and founder of CyberSentinel, Aether News, and FasoLab. Passionate about programming, artificial intelligence, and cybersecurity, I am constantly building skills, creating projects, and learning new technologies.</p>
+      <p data-lang="fr">Orienté sécurité et automatisation, mon objectif est de contribuer à une Afrique numérique plus sûre et plus intelligente à travers des solutions innovantes. Je détiens plusieurs certifications et je cherche toujours à progresser tout en inspirant la prochaine génération de talents tech africains.</p>
+      <p data-lang="en">Focused on security and automation, my goal is to contribute to a safer and smarter digital Africa through innovative solutions. I hold several certifications and I'm always looking to grow while inspiring the next generation of African tech leaders.</p>
+    </div>
+    <div class="facts-box">
+      <div class="facts-header"><span data-lang="fr">En bref</span><span data-lang="en">At a glance</span></div>
+      <div class="facts-list">
+        <div class="fact"><span class="k"><span data-lang="fr">Localisation</span><span data-lang="en">Location</span></span><span class="v">Ouagadougou, BF</span></div>
+        <div class="fact"><span class="k"><span data-lang="fr">Établissement</span><span data-lang="en">School</span></span><span class="v">LSNB Bobo-Dioulasso</span></div>
+        <div class="fact"><span class="k">GitHub</span><span class="v">ouedraogojudicael227-blip</span></div>
+        <div class="fact"><span class="k">Email</span><span class="v">ouedraogojudicael227@gmail.com</span></div>
+        <div class="fact"><span class="k">WhatsApp</span><span class="v">+226 58 23 84 06</span></div>
+        <div class="fact"><span class="k"><span data-lang="fr">Site</span><span data-lang="en">Website</span></span><span class="v">fasolab.netlify.app</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><span class="l"></span><span class="mark"></span><span class="l r"></span></div>
+
+<section id="parcours" class="reveal">
+  <div class="sec-head">
+    <div class="eyebrow"><span data-lang="fr">Parcours</span><span data-lang="en">Journey</span></div>
+    <h2><span data-lang="fr">Formation & parcours</span><span data-lang="en">Education & journey</span></h2>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-date"><span data-lang="fr">En cours</span><span data-lang="en">Ongoing</span></div>
+      <div class="tl-content">
+        <h3>Lycée Scientifique National de Bobo-Dioulasso (LSNB)</h3>
+        <p data-lang="fr">Élève au LSNB, en parallèle de la fondation et du développement de CyberSentinel, Aether News et FasoLab.</p>
+        <p data-lang="en">Student at LSNB, alongside founding and building CyberSentinel, Aether News and FasoLab.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date"><span data-lang="fr">Fondateur</span><span data-lang="en">Founder</span></div>
+      <div class="tl-content">
+        <h3>CyberSentinel · Aether News · FasoLab</h3>
+        <p data-lang="fr">Fondation de trois projets liés à la cybersécurité, à l'actualité tech et à l'expérimentation technique.</p>
+        <p data-lang="en">Founded three ventures related to cybersecurity, tech news, and technical experimentation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><span class="l"></span><span class="mark"></span><span class="l r"></span></div>
+
+<section id="skills" class="reveal">
+  <div class="sec-head">
+    <div class="eyebrow">Stack</div>
+    <h2><span data-lang="fr">Compétences</span><span data-lang="en">Skills</span></h2>
+  </div>
+  <table class="skills-table">
+    <tr><td class="sk"><span data-lang="fr">Leadership & gestion de projet</span><span data-lang="en">Leadership & Project Management</span></td><td class="lv"><span data-lang="fr">Avancé</span><span data-lang="en">Advanced</span></td></tr>
+    <tr><td class="sk"><span data-lang="fr">Programmation</span><span data-lang="en">Programming</span></td><td class="lv"><span data-lang="fr">Intermédiaire</span><span data-lang="en">Intermediate</span></td></tr>
+    <tr><td class="sk">Microsoft Office (Word, Excel, PowerPoint)</td><td class="lv"><span data-lang="fr">Intermédiaire</span><span data-lang="en">Intermediate</span></td></tr>
+    <tr><td class="sk"><span data-lang="fr">Cybersécurité</span><span data-lang="en">Cybersecurity</span></td><td class="lv"><span data-lang="fr">Débutant</span><span data-lang="en">Beginner</span></td></tr>
+    <tr><td class="sk"><span data-lang="fr">Intelligence artificielle</span><span data-lang="en">Artificial Intelligence</span></td><td class="lv"><span data-lang="fr">Débutant</span><span data-lang="en">Beginner</span></td></tr>
+    <tr><td class="sk">Linux</td><td class="lv"><span data-lang="fr">Débutant</span><span data-lang="en">Beginner</span></td></tr>
+  </table>
+  <div class="tools-row">
+    <span class="tag on">Python</span>
+    <span class="tag on">HTML5</span>
+    <span class="tag on">CSS3</span>
+    <span class="tag on">VS Code</span>
+    <span class="tag on">Git</span>
+    <span class="tag on">GitHub</span>
+    <span class="tag on">Firebase</span>
+  </div>
+</section>
+
+<div class="section-divider"><span class="l"></span><span class="mark"></span><span class="l r"></span></div>
+
+<section id="certs" class="reveal">
+  <div class="sec-head">
+    <div class="eyebrow"><span data-lang="fr">Preuves</span><span data-lang="en">Evidence</span></div>
+    <h2>Certifications</h2>
+  </div>
+  <div class="certs">
+    <div class="cert">
+      <div>
+        <div class="cert-name">AI & Cybersecurity Beginners</div>
+        <div class="cert-issuer">Free Academy</div>
+      </div>
+      <span class="cert-status"><span data-lang="fr">Obtenue</span><span data-lang="en">Obtained</span></span>
+    </div>
+    <div class="cert">
+      <div>
+        <div class="cert-name">AI Fluency for Small Business</div>
+        <div class="cert-issuer">Anthropic</div>
+      </div>
+      <span class="cert-status"><span data-lang="fr">Obtenue</span><span data-lang="en">Obtained</span></span>
+    </div>
+    <div class="cert">
+      <div>
+        <div class="cert-name">Certified Cyber Security Foundations</div>
+        <div class="cert-issuer">Hackviser</div>
+      </div>
+      <span class="cert-status"><span data-lang="fr">Obtenue</span><span data-lang="en">Obtained</span></span>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><span class="l"></span><span class="mark"></span><span class="l r"></span></div>
+
+<section id="ctf" class="reveal">
+  <div class="sec-head">
+    <div class="eyebrow"><span data-lang="fr">Pratique</span><span data-lang="en">Practice</span></div>
+    <h2>CTF & write-ups</h2>
+  </div>
+  <!-- Ajoute/retire des .ctf-card avec tes vrais CTF résolus ou articles écrits, sur Hackviser, TryHackMe, Hack The Box, etc. -->
+  <div class="ctf-grid">
+    <div class="ctf-card">
+      <h3><span data-lang="fr">À compléter — ex. Hackviser</span><span data-lang="en">To complete — e.g. Hackviser</span></h3>
+      <p data-lang="fr">Décris ici un challenge résolu sur Hackviser, TryHackMe, Hack The Box... ou un write-up publié.</p>
+      <p data-lang="en">Describe here a challenge solved on Hackviser, TryHackMe, Hack The Box... or a published write-up.</p>
+      <a href="#"><span data-lang="fr">Lire le write-up →</span><span data-lang="en">Read the write-up →</span></a>
+    </div>
+    <div class="ctf-card">
+      <h3><span data-lang="fr">À compléter — ex. TryHackMe</span><span data-lang="en">To complete — e.g. TryHackMe</span></h3>
+      <p data-lang="fr">Décris ici un second challenge, un article de veille, ou une analyse de faille récente.</p>
+      <p data-lang="en">Describe here a second challenge, a monitoring article, or a recent vulnerability analysis.</p>
+      <a href="#"><span data-lang="fr">Lire l'article →</span><span data-lang="en">Read the article →</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><span class="l"></span><span class="mark"></span><span class="l r"></span></div>
+
+<section id="projects" class="reveal">
+  <div class="sec-head">
+    <div class="eyebrow"><span data-lang="fr">Réalisations</span><span data-lang="en">Work</span></div>
+    <h2><span data-lang="fr">Projets</span><span data-lang="en">Projects</span></h2>
+  </div>
+  <div class="projects">
+    <div class="proj">
+      <div class="proj-idx">01</div>
+      <div>
+        <h3>CyberSentinel</h3>
+        <p data-lang="fr">Plateforme de sensibilisation à la cybersécurité, pensée pour aider les utilisateurs à comprendre les risques numériques et adopter de bonnes pratiques de protection.</p>
+        <p data-lang="en">A cybersecurity awareness platform designed to help users understand digital risks and adopt good protection practices.</p>
+      </div>
+      <div class="proj-actions">
+        <a href="https://github.com/ouedraogojudicael227-blip" target="_blank" class="btn solid"><span data-lang="fr">Code source</span><span data-lang="en">Source code</span></a>
+      </div>
+    </div>
+    <div class="proj">
+      <div class="proj-idx">02</div>
+      <div>
+        <h3>FasoLab</h3>
+        <p data-lang="fr">Laboratoire virtuel permettant d'expérimenter et de tester des scénarios liés à la sécurité informatique dans un environnement contrôlé.</p>
+        <p data-lang="en">A virtual lab for experimenting with and testing IT security scenarios in a controlled environment.</p>
+        <div class="proj-link-line">fasolab.netlify.app</div>
+      </div>
+      <div class="proj-actions">
+        <a href="https://fasolab.netlify.app/" target="_blank" class="btn solid"><span data-lang="fr">Voir le projet</span><span data-lang="en">View project</span></a>
+      </div>
+    </div>
+    <div class="proj">
+      <div class="proj-idx">03</div>
+      <div>
+        <h3>meteoric-weather</h3>
+        <p data-lang="fr">Dashboard météo premium au design moderne, avec intégration OpenWeatherMap en temps réel.</p>
+        <p data-lang="en">A premium, modern-design weather dashboard with real-time OpenWeatherMap integration.</p>
+      </div>
+      <div class="proj-actions">
+        <a href="https://github.com/ouedraogojudicael227-blip" target="_blank" class="btn solid"><span data-lang="fr">Code source</span><span data-lang="en">Source code</span></a>
+      </div>
+    </div>
+    <div class="proj">
+      <div class="proj-idx">04</div>
+      <div>
+        <h3>Aether News</h3>
+        <p data-lang="fr">Journal en ligne qui publie des actualités sur la tech et l'informatique.</p>
+        <p data-lang="en">An online news outlet publishing tech and computing news.</p>
+      </div>
+      <div class="proj-actions">
+        <a href="https://github.com/ouedraogojudicael227-blip" target="_blank" class="btn"><span data-lang="fr">En savoir plus</span><span data-lang="en">Learn more</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="reveal">
+  <div class="contact-box">
+    <div class="eyebrow" style="justify-content:center;">Contact</div>
+    <h2><span data-lang="fr">Discutons</span><span data-lang="en">Let's talk</span></h2>
+    <p data-lang="fr">Ouvert aux échanges, collaborations ou opportunités liées à la tech, l'IA et la cybersécurité.</p>
+    <p data-lang="en">Open to conversations, collaborations, or opportunities related to tech, AI and cybersecurity.</p>
+    <div class="contact-links">
+      <a href="mailto:ouedraogojudicael227@gmail.com" class="btn solid">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m4 4 8 8 8-8"/></svg>
+        Email
+      </a>
+      <a href="https://github.com/ouedraogojudicael227-blip" target="_blank" class="btn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+        GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/judica%C3%ABl-ouedraogo-b8b380381" target="_blank" class="btn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 1 1-4-.02 2 2 0 0 1 4 .02ZM7 8.48H3V21h4V8.48Zm6.32 0H9.35V21h3.94v-6.57c0-3.66 4.77-3.96 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.68-2.91V8.48Z"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://wa.me/22658238406" target="_blank" class="btn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.35A10 10 0 1 0 12 2Zm0 18.2a8.15 8.15 0 0 1-4.16-1.14l-.3-.18-3.08.83.83-3-.2-.31A8.2 8.2 0 1 1 12 20.2Zm4.5-6.13c-.24-.12-1.44-.71-1.66-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.53.06-.24-.12-1.02-.38-1.95-1.2-.72-.64-1.21-1.44-1.35-1.68-.14-.24-.02-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.42-.55-.42h-.47c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28Z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+
+    <div class="divider-or"><span data-lang="fr">ou envoie un message directement</span><span data-lang="en">or send a message directly</span></div>
+
+    <form class="contact-form" id="contactForm">
+      <div class="field">
+        <label for="cf-name"><span data-lang="fr">Nom</span><span data-lang="en">Name</span></label>
+        <input type="text" id="cf-name" name="name" required>
+      </div>
+      <div class="field">
+        <label for="cf-email">Email</label>
+        <input type="email" id="cf-email" name="email" required>
+      </div>
+      <div class="field">
+        <label for="cf-message">Message</label>
+        <textarea id="cf-message" name="message" rows="4" required></textarea>
+      </div>
+      <button type="submit"><span data-lang="fr">Envoyer le message</span><span data-lang="en">Send message</span></button>
+      <p class="form-note"><span data-lang="fr">Ouvre ton client mail avec le message pré-rempli.</span><span data-lang="en">Opens your mail client with the message pre-filled.</span></p>
+    </form>
+  </div>
+</section>
+
+<footer>© 2026 Ouedraogo Judicaël <span>·</span> <span data-lang="fr">Ouagadougou, Burkina Faso</span><span data-lang="en">Ouagadougou, Burkina Faso</span></footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  }, {threshold:.15});
+  els.forEach(el=>io.observe(el));
+
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', ()=>{
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progress.style.width = scrolled + '%';
+  });
+
+  // language toggle — bascule aussi le lien du CV vers la version FR ou EN
+  const langToggle = document.getElementById('langToggle');
+  const cvLink = document.getElementById('cvLink');
+  const cvLinkMobile = document.getElementById('cvLinkMobile');
+  langToggle.addEventListener('click', ()=>{
+    document.documentElement.classList.toggle('lang-en');
+    const isEn = document.documentElement.classList.contains('lang-en');
+    document.documentElement.lang = isEn ? 'en' : 'fr';
+    const file = isEn ? 'cv-judicael-en.pdf' : 'cv-judicael-fr.pdf';
+    cvLink.setAttribute('href', file);
+    cvLinkMobile.setAttribute('href', file);
+  });
+
+  const burger = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileClose = document.getElementById('mobileClose');
+  burger.addEventListener('click', ()=> mobileMenu.classList.add('open'));
+  mobileClose.addEventListener('click', ()=> mobileMenu.classList.remove('open'));
+  mobileMenu.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> mobileMenu.classList.remove('open')));
+
+  const contactForm = document.getElementById('contactForm');
+  contactForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const name = document.getElementById('cf-name').value;
+    const email = document.getElementById('cf-email').value;
+    const message = document.getElementById('cf-message').value;
+    const subject = encodeURIComponent('Message depuis le portfolio — ' + name);
+    const body = encodeURIComponent(message + '\n\n— ' + name + ' (' + email + ')');
+    window.location.href = 'mailto:ouedraogojudicael227@gmail.com?subject=' + subject + '&body=' + body;
+  });
+
+  const glow = document.getElementById('cursorGlow');
+  if(window.matchMedia('(hover: hover) and (pointer: fine)').matches){
+    window.addEventListener('mousemove', (e)=>{
+      glow.style.opacity = '1';
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+    });
+  }
+</script>
+
+</body>
+</html>
