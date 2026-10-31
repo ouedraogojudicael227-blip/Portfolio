@@ -2,7 +2,7 @@
 
 Portfolio personnel, orienté cybersécurité, présentant mon parcours, mes projets et mes certifications.
 
-🔗 **Site en ligne :** https://ouedraogojudicael227-blip.github.io/portfolio/ *(à adapter selon le nom de ton repo)*
+🔗 **Site en ligne :** https://judiportfolio.vercel.app
 
 ## Aperçu
 
